@@ -78,14 +78,18 @@ class RobotsAwareSession(requests.Session):
 
     def is_allowed(self, request, timeout=None, proxies=None,
                    verify=None, cert=None):
-        rerp = self.get_rules(request.url)
+        rerp = self.get_rules(
+            request.url, timeout=timeout, proxies=proxies,
+            verify=verify, cert=cert,
+        )
 
         if rerp is None:   # 404 - everybody welcome
             return True
         user_agent = request.headers.get('User-Agent', '')
         return rerp.is_allowed(user_agent, request.url)
     
-    def get_rules(self, request_url):
+    def get_rules(self, request_url, timeout=None, proxies=None,
+                  verify=None, cert=None):
         url = urlsplit(request_url)
         robots_url = '{0}://{1}/robots.txt'.format(
             url.scheme,
