@@ -115,7 +115,7 @@ class RobotsAwareSession(requests.Session):
         return rerp
          
     def send(self, request, **kwargs):
-        if getattr(request, 'prepare', None):
+        if not isinstance(request, requests.PreparedRequest):
             raise ValueError('You can only send PreparedRequests.')
         if not self.is_allowed(request):
             raise RobotsTxtDisallowed(request.url)
