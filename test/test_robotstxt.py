@@ -45,7 +45,7 @@ class TestRobotsAwareSession(unittest.TestCase):
         self.assertEqual(s.get('https://pypi.python.org/').status_code, 200)
         self.assertIn('https://pypi.python.org/robots.txt', s.registry)
         with self.assertRaises(RobotsTxtDisallowed):
-            s.get('https://pypi.python.org/packages/')
+            s.get('https://github.com/')
 
 
 if __name__ == '__main__':
